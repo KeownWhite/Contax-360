@@ -1,0 +1,19 @@
+"SELECT  
+               --  FROM placement_info INNER JOIN payments_staging ON payments_staging.BILL_NO=placement_info.BILL_NO WHERE placement_info.ACCOUNT_NO = 50341966
+               placement_info.FIRST_NAME,
+               placement_info.LAST_NAME,
+               placement_info.ACCOUNT_NO,  
+               placement_info.BILL_NO,
+               placement_info.BALANCE_0_30,
+               placement_info.BALANCE_31_60,
+               placement_info.BALANCE_61_90,
+               placement_info.BALANCE_91_180,
+               placement_info.BAL_181_360,
+               placement_info.BAL_360_PLUS,
+               placement_info.BAL_TOTAL,
+               placement_info.cycle_id,
+               placement_info.DUE_DT
+            --    payments_staging.BILL_DT,
+            --    payments_staging.PAYMENT_DATE,
+            --    payments_staging.PAYMENT_AMOUNT
+               FROM placement_info INNER JOIN payments_staging ON payments_staging.BILL_NO=placement_info.BILL_NO WHERE placement_info.ACCOUNT_NO = $query"  

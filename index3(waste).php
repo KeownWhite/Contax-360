@@ -1,51 +1,6 @@
-<?php
-
-if(isset($_POST['username']) && isset($_POST['password'])){
-
-    $adServer = "ldap://mbjdc02.global.com";
-	
-    $ldap = ldap_connect($adServer);
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $ldaprdn = 'global' . "\\" . $username;
-
-    ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-    ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-
-    $bind = @ldap_bind($ldap, $ldaprdn, $password);
-
-
-    if ($bind) {
-        // $filter="(sAMAccountName=$username)";
-        // $result = ldap_search($ldap,"dc=MYDOMAIN,dc=COM",$filter);
-        // ldap_sort($ldap,$result,"sn");
-        // $info = ldap_get_entries($ldap, $result);
-        // for ($i=0; $i<$info["count"]; $i++)
-        // {
-        //     if($info['count'] > 1)
-        //         break;
-        //     echo "<p>You are accessing <strong> ". $info[$i]["sn"][0] .", " . $info[$i]["givenname"][0] ."</strong><br /> (" . $info[$i]["samaccountname"][0] .")</p>\n";
-        //     echo '<pre>';
-        //     var_dump($info);
-        //     echo '</pre>';
-        //     $userDn = $info[$i]["distinguishedname"][0]; 
-        // }
-        header("Location: dashboard.php");
-        @ldap_close($ldap);
-    } else {
-        $msg = "Invalid email address / password";
-        echo $msg;
-    }
-
-}else{
-?>
-    <!-- <form action="#" method="POST">
-        <label for="username">Username: </label><input id="username" type="text" name="username" /> 
-        <label for="password">Password: </label><input id="password" type="password" name="password" />
-        <input type="submit" name="submit" value="Submit" />
-    </form> -->
-    <head>
+<!DOCTYPE html>
+<html>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Promise to Pay</title>
@@ -65,7 +20,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
         crossorigin="anonymous">
         <!-- Compiled and minified CSS -->
     
-    <!-- Compiled and minified JavaScript -->
+<!-- Compiled and minified JavaScript -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/sass.js/0.6.3/sass.min.js"></script>
     <script src="main.js"></script>
     <style>
@@ -141,28 +96,72 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     </div><br> --><br>
     <div class="container mt-5 in-down" style="width:25% !important">
         <div class="mt-2">
-            <h4 class="text-col mb-3 text-center">Login</h4>
+            <h4 class="text-col mb-3 text-center">Logdtgdtgdrtdretdrtdertgin</h4>
             <p class="text-center">Promise to Pay</p>
             <form method="post" action="index.php">
                 <div class="row">
                     <div class="col mb-3">
                         <span class="small bold text-col" >Username</span>
-                        <input class="form-control" id="username" type="text" name="username">
+                        <input class="form-control" name="userLogin" type="text">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col mb-3">
                         <span class="small bold text-col">Password</span>
-                        <input class="form-control" id="password" type="password" name="password">
+                        <input class="form-control" name="userPassword" value=""
+                        type="password">
                     </div>
                 </div>
                 <div class="row-3">
-                    <button style="background-color:#00abe8;color:white" type="submit" id="submit-btn-contact " class="col btn send-btn mb-2" name="submit">Login<i class="fas fa-arrow-circle-right ml-3"></i></button>
+                    <button style="background-color:#00abe8;color:white" type="submit" id="submit-btn-contact" class="col btn send-btn mb-2">Login<i class="fas fa-arrow-circle-right ml-3"></i></button>
                 </div>
             </form>
         </div>
     </div>
 </body>
+</html>
 
-<?php } ?> 
+<?php
+    // initialize session
+    session_start();
+    
+    
+    include("authenticate.php");
+    //echo("authenticate line");
+    
+    // // check to see if user is logging out
+    if(isset($_GET['out'])) {
+        // destroy session
+        session_unset();
+        $_SESSION = array();
+        unset($_SESSION['userLogin'],$_SESSION['userPassword']);
+        session_destroy();
+    }
+    
+    // // check to see if login form has been submitted
+    if(isset($_POST['userLogin']))
+    {
+        echo('test test test');
+        // header("Location: dashboard.php");
+        // die();
+        //run information through authenticator
+        if(authenticate($_POST['userLogin'],$_POST['userPassword']))
+        {
+            // authentication passed
+            echo('<br>dap work<br>');
+            header("Location: dashboard.php");
+            die();
+        } else {
+            // authentication failed
+            echo('the authentification failed');
+            $error = 1;
+        }
+    }
+    
+    // // // output error to user
+    // if(isset($error)) echo "Login failed: Incorrect username, password, or rights<br/>";
+    
+    // // output logout success
+    // if(isset($_GET['out'])) echo "Logout successful";
+?>

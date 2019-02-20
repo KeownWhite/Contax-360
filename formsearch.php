@@ -160,14 +160,15 @@
                                                             <div class="tab-pane fade" id="payments-made'.$result_counter.'"role="tabpanel" aria-labelledby="payments-made-tab">
                                                                 <class="row">
                                                                     <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">Payment Type</th>
-                                                                            <th scope="col">Payment Date</th>
-                                                                            <th scope="col">Payment Amount</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Date</th>
+                                                                                <th scope="col">Type</th>
+                                                                                <th scope="col">Made By</th>
+                                                                                <th scope="col">Amount</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    <tbody><br>
                                                                         
                                 '; 
                                 
@@ -175,43 +176,52 @@
 
                                 //////// Get Payment information ///////////////////
                                 $payment_html;
-                                $payment_staging_query="SELECT payments_staging.PAYMENT_DATE AS DATE,
-                                                                'Payment' as 'Type',
-                                                                'SYSTEM' as PROMISE_BY,
-                                                                payments_staging.PAYMENT_AMOUNT AS AMOUNT                             
+                                $union_query1=" SELECT payments_staging.PAYMENT_DATE AS DATE,
+                                                        'Payment' as 'Type',
+                                                        'SYSTEM' as PROMISE_BY,
+                                                        payments_staging.PAYMENT_AMOUNT AS AMOUNT                             
                                                         FROM payments_staging
-                                                        WHERE payments_staging.BILL_NO=$row['BILL_NO']
-                                                        UNION ALL
-                                                        SELECT ptp_info.date_promised AS DATE, 'Promise' AS 'Type', ptp_info.PROMISE_BY, ptp_info.amt_promised AS AMOUNT
-                                                        FROM placement_info
-                                                        INNER JOIN ptp_info ON placement_info.placement_id = ptp_info.placement_id_fk
-                                                        WHERE placement_info.BILL_NO =$row['BILL_NO']"; //order by cast([DATE] as datetime) asc
-
+                                                        WHERE payments_staging.BILL_NO=";
+                                $union_query2=" UNION ALL
+                                                SELECT ptp_info.date_promised AS DATE, 
+                                                        'Promise' AS 'Type', 
+                                                        ptp_info.PROMISE_BY, 
+                                                        ptp_info.amt_promised AS AMOUNT
+                                                FROM placement_info
+                                                INNER JOIN ptp_info ON placement_info.placement_id = ptp_info.placement_id_fk
+                                                WHERE placement_info.BILL_NO=";                                
                                                         
                                                         
-                                          
-                                // echo $payment_staging_query;
-                                
+                                $payment_staging_query=$union_query1.$row['BILL_NO'].$union_query2.$row['BILL_NO'];
+                                                     
+                                //echo($payment_staging_query);
                                 $payment_staging_query_result = mysqli_query($conn, $payment_staging_query)  or die ('Unable to execute query. '. mysqli_error($link));
                                 
-                                $row2 = mysqli_fetch_array($payment_staging_query_result);
+                                $payment_row = mysqli_fetch_array($payment_staging_query_result);
                                 $table_head;
                                 $payment_html="";
+                                $loop=0;
                                 
-                                echo 'number of rows ' .mysqli_num_rows($row2);
+                                //echo(sizeof($payment_row));
+                                
+                                // echo 'number of rows ' .mysqli_num_rows($row2);
                                 while($payment_row = mysqli_fetch_array($payment_staging_query_result))
                                 {
                                     $payment_html=$payment_html.'       <tr>
-                                                                            <td>'.$payment_row['BILL_DT'].'</td>
-                                                                            <td>'.$payment_row['PAYMENT_DATE'].'</td>
-                                                                            <td>'.$payment_row['PAYMENT_AMOUNT'].'</td>
+                                                                            <td>'.$payment_row['DATE'].'</td>
+                                                                            <td>'.$payment_row['Type'].'</td>
+                                                                            <td>'.$payment_row['PROMISE_BY'].'</td>
+                                                                            <td>$'.$payment_row['AMOUNT'].'</td>                            
                                                                         </tr>
                                                                     ';
-            
-                                }                               
+                                    //echo 'number of rows-->'.$result_counter;
+                                    //echo($payment_row['Type'].' ');
+                                      
+                                }
+                                                               
                                 
-                                // resume HTML 
-                                $html = $html. ' '.$payment_html.'          
+                                // resume HTML
+                                $html = $html.$payment_html.'          
                                                                     
                                                                         </tbody>
                                                                     </table>                                             
@@ -257,7 +267,7 @@
                                 <div class="col-sm-6 ">
                                     '.$html.'
                                 </div>
-                            </div>';
+                            </div><br><br>';
                     mysqli_close($conn);
                     
                 }

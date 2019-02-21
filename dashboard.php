@@ -1,3 +1,7 @@
+<?php
+        
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -61,7 +65,18 @@
     <!-- Overview -->
     <center>
         <form>
-            <?php
+    <?php
+
+    //require_once('index.php');
+    
+    //include('protected.php');
+
+    session_start();
+    session_regenerate_id();
+    if(!isset($_SESSION['user']))      // if there is no valid session
+    {
+        header("Location: index.php");
+    }
 
     $servername = "192.168.1.100";
     $username = "flowcollections";
@@ -84,11 +99,11 @@
 
         $total_records_per_page = 5;
 
-        $offset = ($page_no-1) * $total_records_per_page;
+    $offset = ($page_no-1) * $total_records_per_page;
     $previous_page = $page_no - 1;
     $next_page = $page_no + 1;
     $adjacents = "2";
-
+    
     $result_count = mysqli_query(
         $conn,
         "SELECT COUNT(*) As total_records FROM `ptp_info`"
@@ -235,6 +250,7 @@
 
             ';}
             mysqli_close($conn);
+            // 
             ?>
 
         </form>

@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard</title>
+    <title>Promise to Pay</title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -47,47 +46,14 @@
         <input type="text" id="search-bar" placeholder="Search ...">
         <a href="#"><i class="fas fa-search search-icon"></i></a>
     </form> -->
-
+    
     <div style="margin-right:28% !important" class="col mr-5 mb-5">
-            <form id="submit" action="dashboardsearch.php" method="POST" class="needs-validation search-container"
+            <form id="submit" action="indexsearch.php" method="POST" class="needs-validation search-container"
                 novalidate>
                 <input class="form-control" autocomplete="off" id="search-bar" onkeypress="return isNumberKey(event)" name="query" type="text"
-                    placeholder="Search Promises">
+                    placeholder="Search ...">
                 <a href="#" id="click"  onclick="this.form.submit()" ><i class="fas fa-search search-icon"></i></a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Promise Button
-                </button>
             </form>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal titleasdadasd</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div style="margin-right:28% !important" class="col mr-5">
-                        <form id="submit" action="formsearch.php" method="POST" class="needs-validation search-container" novalidate>
-                            <input class="form-control" autocomplete="off" value="<?php echo ($_GET["account_number"]) ?>"
-                            id="search-bar" onkeypress="return isNumberKey(event)" name="query"
-                            type="text" placeholder="Account Number">
-                            <a id="click" onclick="this.form.submit()"><i style="cursor:pointer" class="fas fa-search search-icon"></i></a>
-                            <br>
-                        </form>
-                        
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
-            </div>
-    </div>
         </div>
     </div>
     <!-- End of Search Bar -->
@@ -95,11 +61,7 @@
     <!-- Overview -->
     <center>
         <form>
-    <?php
-
-    //require_once('index.php');
-    
-    //include('protected.php');
+            <?php
 
     $servername = "192.168.1.100";
     $username = "flowcollections";
@@ -122,11 +84,11 @@
 
         $total_records_per_page = 5;
 
-    $offset = ($page_no-1) * $total_records_per_page;
+        $offset = ($page_no-1) * $total_records_per_page;
     $previous_page = $page_no - 1;
     $next_page = $page_no + 1;
     $adjacents = "2";
-    
+
     $result_count = mysqli_query(
         $conn,
         "SELECT COUNT(*) As total_records FROM `ptp_info`"
@@ -273,7 +235,6 @@
 
             ';}
             mysqli_close($conn);
-            // 
             ?>
 
         </form>

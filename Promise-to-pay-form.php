@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -26,8 +27,8 @@
 
 <body>
     <!-- Header -->
-    <a href="index.php"><img src="images/flow-logo.png" class="flow-logo p-0" alt="Flow Logo"></a>
-    <a href="index.php"><i class="fas fa-tachometer-alt"></i> <span class="ml-1 active">Overview</span></a>
+    <a href="dashboard.php"><img src="images/flow-logo.png" class="flow-logo p-0" alt="Flow Logo"></a>
+    <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> <span class="ml-1 active">Overview</span></a>
     <button class="float-right"><span><i class="fas fa-file-alt ml-1"></i> <span class="ml-1">Promise to Pay Form</span></button>
     <div class="hr-margin">
         <hr>
@@ -139,49 +140,7 @@
 
     </form>
 
-    <!-- Date Picker -->
-    <script>
-        var date = new Date();
-        date.setDate(date.getDate());
-        $('#date_promised').datepicker({
-            startDate: date,
-            autoclose: true
-        });
-    </script>
-
-    <script>
-        // $('.clickMe').click(function () {
-        //     alert(this.id);
-        // });
-        function show(target) {
-            document.getElementById(target).style.display = 'block';
-        }
-
-        function hide(target) {
-            document.getElementById(target).style.display = 'none';
-        }
-    </script>
-
-    <!-- End of Date Picker -->
-
-    <!-- Number Only Input Validation -->
-    <script>
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode != 46 && charCode > 31 &&
-                (charCode < 48 || charCode > 57))
-                return false;
-            return true;
-        }
-    </script>
-    <!-- End Of Number Only Input Validation -->
-
-
-    <script>
-        document.getElementById("click").onclick = function () {
-            document.getElementById("submit").submit();
-        }
-    </script>
+    
 
 </body>
 

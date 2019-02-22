@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Promise to Pay</title>
+    <title>Promise to Pay Form</title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
+        type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/sass.js/0.6.3/sass.min.js"></script>
     <script src="main.js"></script>
-
 </head>
 
 <body>
     <img src="images/flow-logo.png" class="flow-logo p-0" alt="Flow Logo">
-    <a href="index.php"><i class="fas fa-tachometer-alt"></i> <span class="ml-1 active">Overview</span></a>
+    <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> <span class="ml-1 active">Overview</span></a>
     <!-- <a href="Promise-to-pay-form.php"><button class="float-right"><span><i class="fas fa-file-alt ml-1"></i></span>
             <span class="ml-1">Promise to Pay Form</span></button></a> -->
     <div class="hr-margin"></div>
@@ -96,10 +96,12 @@
                     $html;
                     $result_counter=0;
 
+            
+
                     
                     while($row = mysqli_fetch_array($result))
                     {
-
+                       
                         $html = $html.'
                                             <br>
                                             <div class="card">
@@ -113,15 +115,9 @@
                                                             <li class="nav-item">
                                                                 <a class="nav-link" id="payments-made-tab" data-toggle="pill" href="#payments-made'.$result_counter.'" role="tab" aria-controls="payments-made" aria-selected="false">Payments/Promise</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="Promise-to-pay-form.php"><button type="button" class="btn btn-light text-primary">Make a Promise</button></a>
-                                                            </li>
                                                         </ul>
                                                         <div class="tab-content" id="pills-tabContent">
                                                             <div class="tab-pane fade show active" id="bill-info'.$result_counter.'" role="tabpanel" aria-labelledby="bill-info-tab">
-
-                                                                
-                                                                
                                                                     <dl class="row">
                                                                         <dt class="col-sm-3 text-truncate">Account Number</dt>
                                                                         <dd class="col-sm-9">'.$row ['ACCOUNT_NO'].'</dd>
@@ -152,11 +148,106 @@
 
                                                                     </dl>
                                                                 <br>
+
                                                                 
+                                                                <!-- Button trigger modal -->
+                                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal'.$result_counter.'">
+                                                                Launch demo modal
+                                                                </button>
+
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="exampleModal'.$result_counter.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"  id="exampleModalLabel'.$result_counter.'">Modal title</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form autocomplete="off" action="PTP-form.php" method="post" class="ml-1 mr-5">
+                                                                            <div class="row form-size size">
+                                                                            </div>
+                                                                            <div id="hidden">
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">First Name</p>
+                                                                                        <input class="form-control" name="first_name"
+                                                                                        type="text"
+                                                                                        placeholder="'.$row['FIRST_NAME'].'"readonly>
+                                                                                    </div>
+
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">Last Name</p>
+                                                                                        <input class="form-control" name="first_name"
+                                                                                        type="text"
+                                                                                        placeholder="'.$row['LAST_NAME'].'"readonly>
+                                                                                    </div>
+
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">Bill No</p>
+                                                                                        <input class="form-control" name="bill_no"
+                                                                                        type="text"
+                                                                                        placeholder="'.$row ['BILL_NO'].'"readonly>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">Agent</p>
+                                                                                        <input class="form-control" name="agent"
+                                                                                        type="text"
+                                                                                        placeholder="Agent"readonly>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">Date Promised</p>
+                                                                                        <div class="inner-addon right-addon">
+                                                                                            <span class="input-group-addon"><i class="fas fa-calendar-alt"></i></span>
+                                                                                            <input name="date_promised" id="date_promised" class="form-control date" data-date-format="yyyy-mm-dd"
+                                                                                                type="text">
+
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col">
+                                                                                        <p class="small bold text-col">Amount Promised</p>
+                                                                                        <div class="inner-addon right-addon">
+                                                                                            <span class="input-group-addon"><i class="fas fa-dollar-sign"></i></span>
+                                                                                            <input name="amt_promised" onkeypress="return isNumberKey(event)" class="form-control pad-lef"
+                                                                                                type="text" id="amt_promised">
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="ml-5 mt-4">
+                                                                                
+                                                                                    <div class="form-group">
+                                                                                        <label class="small bold text-col" for="exampleFormControlTextarea1">Notes</label>
+                                                                                        <textarea name="notes" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- End of Form -->
+
+                                                                        </form>
+
+
+
+                                                                    </form>
+
+                                                                    </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                                            
+                                                                        </div>          
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                </div>                                                                
                                                             </div>
-
-
-                                                            
                                                             <div class="tab-pane fade" id="payments-made'.$result_counter.'"role="tabpanel" aria-labelledby="payments-made-tab">
                                                                 <class="row">
                                                                     <table class="table table-hover">
@@ -164,14 +255,12 @@
                                                                             <tr>
                                                                                 <th scope="col">Date</th>
                                                                                 <th scope="col">Type</th>
-                                                                                <th scope="col">Made By</th>
+                                                                                <th scope="col">Agent</th>
+                                                                                <th scope="col">Made-By</th>
                                                                                 <th scope="col">Amount</th>
                                                                             </tr>
                                                                         </thead>
-                                                                    <tbody><br>
-                                                                        
-                                '; 
-                                
+                                                                    <tbody><br>'; 
                                 //// end $HTML to inser payment information
 
                                 //////// Get Payment information ///////////////////
@@ -179,11 +268,13 @@
                                 $union_query1=" SELECT payments_staging.PAYMENT_DATE AS DATE,
                                                         'Payment' as 'Type',
                                                         'SYSTEM' as PROMISE_BY,
+                                                        payments_staging.created_on,
                                                         payments_staging.PAYMENT_AMOUNT AS AMOUNT                             
                                                         FROM payments_staging
                                                         WHERE payments_staging.BILL_NO=";
                                 $union_query2=" UNION ALL
-                                                SELECT ptp_info.date_promised AS DATE, 
+                                                SELECT  ptp_info.Agent,
+                                                        ptp_info.date_promised AS DATE, 
                                                         'Promise' AS 'Type', 
                                                         ptp_info.PROMISE_BY, 
                                                         ptp_info.amt_promised AS AMOUNT
@@ -209,6 +300,7 @@
                                 {
                                     $payment_html=$payment_html.'       <tr>
                                                                             <td>'.$payment_row['DATE'].'</td>
+                                                                            <td>'.$payment_row['Type'].'</td>
                                                                             <td>'.$payment_row['Type'].'</td>
                                                                             <td>'.$payment_row['PROMISE_BY'].'</td>
                                                                             <td>$'.$payment_row['AMOUNT'].'</td>                            
@@ -249,17 +341,17 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Personal Info</h5>
                                             <dl class="row">                                               
-                                                <dt class="col-sm-7 text-truncate">Name</dt>
-                                                <dd class="col-sm-5">'.$lastrow['FIRST_NAME'].'&nbsp;&nbsp;'.$lastrow['LAST_NAME'].'</dd>
+                                                <dt class="col-sm-5 text-truncate">Name</dt>
+                                                <dd class="col-sm-7">'.$lastrow['FIRST_NAME'].'&nbsp;&nbsp;'.$lastrow['LAST_NAME'].'</dd>
 
-                                                <dt class="col-sm-7 text-truncate">Contact Number 1</dt>
-                                                <dd class="col-sm-5">'.$lastrow['CONTACT_PHONE_1'].'</dd>
+                                                <dt class="col-sm-5 text-truncate">Contact Number 1</dt>
+                                                <dd class="col-sm-7">'.$lastrow['CONTACT_PHONE_1'].'</dd>
                                                 
-                                                <dt class="col-sm-7 text-truncate">Contact Number 2</dt>
-                                                <dd class="col-sm-5">'.$lastrow['CONTACT_PHONE_2'].'</dd>
+                                                <dt class="col-sm-5 text-truncate">Contact Number 2</dt>
+                                                <dd class="col-sm-7">'.$lastrow['CONTACT_PHONE_2'].'</dd>
 
-                                                <dt class="col-sm-7 text-truncate">Contact Number 3</dt>
-                                                <dd class="col-sm-5">'.$lastrow['CONTACT_PHONE_3'].'</dd>
+                                                <dt class="col-sm-5 text-truncate">Contact Number 3</dt>
+                                                <dd class="col-sm-7">'.$lastrow['CONTACT_PHONE_3'].'</dd>
                                             </dl>
                                         </div>
                                     </div>
@@ -292,6 +384,49 @@
             document.getElementById(target).style.display = 'none';
         }
     </script>
+
+    <script>
+        document.getElementById("click").onclick = function () {
+            document.getElementById("submit").submit();
+        }
+    </script>
+    <!-- Date Picker -->
+    <script>
+        var date = new Date();
+        date.setDate(date.getDate());
+        $('#date_promised').datepicker({
+            startDate: date,
+            autoclose: true
+        });
+    </script>
+
+    <script>
+        // $('.clickMe').click(function () {
+        //     alert(this.id);
+        // });
+        function show(target) {
+            document.getElementById(target).style.display = 'block';
+        }
+
+        function hide(target) {
+            document.getElementById(target).style.display = 'none';
+        }
+    </script>
+
+    <!-- End of Date Picker -->
+
+    <!-- Number Only Input Validation -->
+    <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31 &&
+                (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+    <!-- End Of Number Only Input Validation -->
+
 
     <script>
         document.getElementById("click").onclick = function () {
